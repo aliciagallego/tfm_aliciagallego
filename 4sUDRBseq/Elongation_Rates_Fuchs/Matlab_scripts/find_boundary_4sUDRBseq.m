@@ -49,8 +49,7 @@ if min(sum(~isnan(data_gene_introns) & (data_gene_introns > 0),2)) > 20
     % For each point we will sum 5Kb (with weights) upstream it. As the
     % phenomenoon we are looking for is an "area" one and not a specific
     % point one
-    % ALICIA_PLAY WITH DIFFERENT VALUES THAN 5000 
-    winsize = ceil(1000 / bin_size);
+    winsize = ceil(5000 / bin_size);
     data_summed = cummulative_sum_data(data, winsize);
     
     % As we want to see a relative increase, we would like to divide each
@@ -78,7 +77,6 @@ if min(sum(~isnan(data_gene_introns) & (data_gene_introns > 0),2)) > 20
             ind = cur_ind - winsize/2;
         end
     end
-    
     
     % As the previous method finds a rough estimate of the boundary point
     % we will try to find a more subtle breaking point in a different
@@ -196,7 +194,6 @@ else
     new_ind = nan;
 end
 end
-
 
 
 function data_gene_introns = extract_intron_data(chr_data, tss_pos, exons_pos, bin_size)

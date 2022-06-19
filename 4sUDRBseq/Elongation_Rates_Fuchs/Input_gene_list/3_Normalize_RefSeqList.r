@@ -1,11 +1,16 @@
 #!/usr/bin/env Rscript
 
-#############################
-## Normalize (RefSeq 20621) # 20220325 and 20220331
-#############################
+###################################################
+## Normalize 4sUDRB expression (RefSeq gene list) # 
+###################################################
 
-# The objective of this script is the normalization by total number of reads per experiment of the transcriptome RefSeq list based on TTseq reads
+# The objective of this script is the normalization by total number of reads per experiment of the transcriptome RefSeq list based on 4sUDRBseq reads
 # It also adds the correct star and end coords for each gene (since they were transformed to just consider the first 20 Kb)
+
+# -----------
+# Libraries |
+# -----------
+library(dplyr)
 
 # -------
 # Paths |
@@ -21,7 +26,6 @@ refseq <- read.table(refseq_path,h=F,sep="\t",stringsAsFactors=FALSE,
                      col.names = c("Chr","Start","End","Gene_name","NA1","Strand"))
 
 TTseq_list = list.files(TTseq_path, pattern="*.bed")
-TTseq_list
 
 for (i in seq_along(TTseq_list)) {
   filename <- sub(".bed", "", TTseq_list[i])
@@ -31,10 +35,6 @@ for (i in seq_along(TTseq_list)) {
   df <- subset(df, select=-c(NA1)) # remove uninformative columns
   assign(filename, df)
 }
-nrow(MG9_12)
-head(MG9_12)
-head(refseq)
-nrow(refseq)
 
 # ------------------------------------
 # Total reads (data from experiment) | Only 5 min samples are taken into account
@@ -56,14 +56,11 @@ MG9_18$TTseq_MG9_18 = (MG9_18$TTseq_MG9_18/MG9_18_reads) * 10000000
 # Remove transcripts with negative coords (these are mitochondrial and rare sequences) |
 # --------------------------------------------------------------------------------------
 aa<- refseq$V1=="chrMT" #0
-aa
 refseq <- refseq[!(refseq$Strand == '-' & (refseq$End-20000<0)),]
-nrow(refseq)
 
 # --------------------------------------------
 # Recover start and end original coordinates |
 # --------------------------------------------
-library(dplyr)
 MG9_12_merged<- Reduce(function(x,y) merge(x = x, y = y, by="Gene_name", sort = F),
                        list(MG9_12[,c("Gene_name","Chr","Strand","TTseq_MG9_12")],
                             refseq[,c("Gene_name","Start", "End")]))

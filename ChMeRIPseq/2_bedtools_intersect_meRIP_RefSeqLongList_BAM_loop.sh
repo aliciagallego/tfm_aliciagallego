@@ -16,8 +16,6 @@ do
 	
 done
 
-
-
 IPS=/media/cc/A/Alicia/NGS/meRIP/meRIP_data/Alignments/IPs/*001
 
 for DIR in $IPS
@@ -28,4 +26,3 @@ do
 	bedtools intersect -a $AFILE -b $FILE -c -s > /media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/2_Intersect_RefSeq_BAM/$NAME.bed
 	
 done
-

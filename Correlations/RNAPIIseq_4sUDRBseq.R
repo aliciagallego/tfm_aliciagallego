@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
 
-#######################################################
-## Correlations RNApolII and elongation rates (TTseq) # 20220119
-#######################################################
+#################################################################
+## Correlations RNAPII ChIPseq and elongation rates (4sUDRBseq) #
+#################################################################
 
 # -----------
 # Libraries |
@@ -110,7 +110,6 @@ merged<- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F),
                                      TKO_GB[,c("RNApol_TKO_GB","Gene_name")],
                                      WT_PR[,c("RNApol_WT_PR", "Gene_name")],
                                      TKO_PR[,c("RNApol_TKO_PR", "Gene_name")]))
-nrow(merged)
 # ------------------
 # Save merged file |
 # ------------------
@@ -121,7 +120,6 @@ write.table(merged, file = paste0(output,"RNApol-TTseq_merged.bed"),
 # Correlation test |
 # ------------------
 cor.test(merged$TTseq_WT, merged$RNApol_WT_GB, method=c("pearson", "kendall", "spearman"))
-cor.test(merged$TTseq_WT, merged$RNApol_WT_GB, method=c("pearson"))
 
 # pearson resulted more significant for gene body
 png(file = paste0(output, "Pearson_RNApolII_TTseq_WT_GB.png"))
@@ -177,9 +175,9 @@ ggscatter(merged, x = "TTseq_TKO", y = "RNApol_TKO_PR",
   ggtitle("Spearman correlation RNApolII vs. elongation rates - TKO PR (2399 genes)")
 dev.off()	
 
-# -------------------------------
-# Plot RNApol in the 2400 genes |
-# -------------------------------
+# ---------------------------------------
+# Plot RNAPII in PR and GB / WT and TKO |
+# ---------------------------------------
 png(file = paste0(output, "Plot_RNApolII_2400_62_genes.png"))
 merged_ordered <- merged[order(merged$RNApol_WT_GB,decreasing = F),] 
 plot(merged_ordered$RNApol_WT_GB,

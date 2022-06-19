@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 ########################################################
-## Normalize H1 Cao et al 2013 data (RefSeq long list) # 20220609
+## Normalize H1 Cao et al 2013 data (RefSeq long list) #
 ########################################################
 
 # -------
@@ -87,9 +87,6 @@ merged<- Reduce(function(x,y) merge(x = x, y = y, by.x="Name", by.y="Gene_name",
                 list(refseq[,c("Chromosome","Start", "End", "Exon_number", "Orientation","Name")],
                      TTseq[,c("Gene_name","WT_Pull", "TK0_Pull")]))
 
-nrow(merged)
-nrow(TTseq)
-nrow(refseq)
 # ---------------------------------------------------------
 # Get transcript size in Kb based on End and Start coords |
 # ---------------------------------------------------------
@@ -99,15 +96,11 @@ merged$Size <- (merged$End - merged$Start)/1000
 # Delete NaN values |
 # -------------------
 merged_noNan <- na.omit(merged)  
-nrow(merged_noNan)
 
 # ------------------------------------------------
 # Remove genes with elongation rate < 0.5 kb/min |
 # ------------------------------------------------
-nrow(merged_noNan)
-nrow(merged_non05)
 merged_non05 <- merged_noNan[which(merged_noNan$WT_Pull > 0.5 & merged_noNan$TK0_Pull > 0.5),]
-head(merged_noNan)
 colnames(merged_non05)[1] <- "Gene_name"
 
 # ----------------------------
@@ -121,18 +114,11 @@ merged_H1d<- Reduce(function(x,y) merge(x = x, y = y, by="Gene_name", sort = F),
                     list(H1d[,c("Chr","Start","End","Strand","readsCaonorm","Gene_name")],
                          merged_non05[,c("WT_Pull", "Exon_number", "Size","Gene_name")]))
 
-head(H1c)
-nrow(H1d)
-nrow(merged_H1c)
-nrow(merged_H1d)
-head(merged_non05)
-
 # ------------------------------
 # Obtain tertiles and classify |
 # ------------------------------
 
 # WT
-# --
 QWT <- quantile(merged_non05$WT_Pull, probs = seq(0, 1, 1/3), na.rm = FALSE)  
 upWT <-  QWT[[3]]  
 lowWT<- QWT[[2]]
@@ -145,7 +131,6 @@ WTfast <- (subset(merged_non05, merged_non05$WT_Pull>upWT))
 WTfast <- WTfast[order(WTfast$WT_Pull),]
 
 # TKO
-# ---
 QTKO <- quantile(merged_non05$TK0_Pull, probs = seq(0, 1, 1/3), na.rm = FALSE)  
 upTKO <-  QTKO[[3]]  
 lowTKO<- QTKO[[2]]
@@ -169,8 +154,6 @@ colnames(WTfast) <- names_vec
 colnames(TKOslow) <- names_vec
 colnames(TKOmedium) <- names_vec
 colnames(TKOfast) <- names_vec
-
-# merged
 
 merged_WTslow_H1c<- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F),
                                  list(H1c[,c("Chr","Start","End","Strand","readsCaonorm","Gene_name")],
@@ -197,12 +180,10 @@ merged_WTfast_H1d<- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", s
 # ----------
 
 png(file = paste0(output, "BoxPlots_H1Cao_tertiles.png"))
-wilcox <- wilcox.test(merged_WTslow_H1c$readsCaonorm, merged_WTmed_H1c$readsCaonorm)
-wilcox
-wilcox <- wilcox.test(merged_WTmed_H1c$readsCaonorm,merged_WTfast_H1c$readsCaonorm)
-wilcox
-wilcox <- wilcox.test(merged_WTslow_H1c$readsCaonorm, merged_WTfast_H1c$readsCaonorm)
-wilcox
+wilcox1 <- wilcox.test(merged_WTslow_H1c$readsCaonorm, merged_WTmed_H1c$readsCaonorm)
+wilcox2 <- wilcox.test(merged_WTmed_H1c$readsCaonorm,merged_WTfast_H1c$readsCaonorm)
+wilcox3 <- wilcox.test(merged_WTslow_H1c$readsCaonorm, merged_WTfast_H1c$readsCaonorm)
+
 boxplot(merged_WTslow_H1c$readsCaonorm, merged_WTmed_H1c$readsCaonorm,merged_WTfast_H1c$readsCaonorm,
         merged_WTslow_H1d$readsCaonorm, merged_WTmed_H1d$readsCaonorm,merged_WTfast_H1d$readsCaonorm,
         col = "grey",

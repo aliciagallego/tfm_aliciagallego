@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 NUMS=$(seq 11 18); 
 
 for NUM in 12 14 16 18
@@ -11,5 +10,3 @@ do
 
 	bedtools intersect -a $BED -b $BAM -c -s > $SALIDA
 done
-
-

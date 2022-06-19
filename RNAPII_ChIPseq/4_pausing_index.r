@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 #############################################
-## Pausing index (RefSeq long list -+500bp) # 20220214
+## Pausing index (RefSeq long list -+500bp) #
 #############################################
 
 # -----------
@@ -31,13 +31,6 @@ RNAPII_PR <- read.table(RNAPII_PR_path ,h=T, sep="\t", stringsAsFactors=F)
 m6AWT <- read.table(m6AWT_path, h=T,sep="\t",stringsAsFactors=F)
 m6ATKO <- read.table(m6ATKO_path, h=T,sep="\t",stringsAsFactors=F)
 
-tail(RNAPII_PR)
-tail(m6AWT)
-nrow(RNAPII_GB)
-sum(RNAPII_PR$Gene_name==RNAPII_GB$Gene_name)
-nrow(m6AWT)
-nrow(m6ATKO)
-
 # ---------------------
 # Merge RNApolII data |
 # ---------------------
@@ -54,16 +47,11 @@ colnames(mergedRNAPII_GB_PR) <- c("Gene_name","Chr","Start_GB","End_GB","Strand"
 mergedRNAPII_GB_PR$PausIndex_WT = mergedRNAPII_GB_PR$RNAPII_WT_PR/mergedRNAPII_GB_PR$RNAPII_WT_GB
 mergedRNAPII_GB_PR$PausIndex_TKO = mergedRNAPII_GB_PR$RNAPII_TKO_PR/mergedRNAPII_GB_PR$RNAPII_TKO_GB
 
-summary(mergedRNAPII_GB_PR)
-nrow(mergedRNAPII_GB_PR)
-
 # -----------------------------
 # Remove NA, Inf and 0 values |
 # -----------------------------
 mergedRNAPII_GB_PR <- subset(mergedRNAPII_GB_PR, PausIndex_WT!="NaN" & PausIndex_WT!=0 & PausIndex_WT!="Inf")
 mergedRNAPII_GB_PR <- subset(mergedRNAPII_GB_PR, PausIndex_TKO!="NaN" & PausIndex_TKO!=0 & PausIndex_TKO!="Inf")
-
-nrow(mergedRNAPII_GB_PR)
 
 # -----------
 # Save data |
@@ -71,9 +59,6 @@ nrow(mergedRNAPII_GB_PR)
 write.table(mergedRNAPII_GB_PR, 
             file = paste0(output,"RNAPII_RefSeq_LongList_PausingIndex_500bp.txt"),
             quote = F, sep="\t", col.names = T, row.names = F)     
-
-nrow(mergedRNAPII_GB_PR)
-head(mergedRNAPII_GB_PR)
 
 # ------------------------------------------
 # Merge RNApolII pausing data and m6A data |
@@ -83,9 +68,6 @@ merged<- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F),
                      m6ATKO[,c("meRIP_TKO","Gene_name")],
                      mergedRNAPII_GB_PR[,c("PausIndex_WT","PausIndex_TKO", "Gene_name")]))
 
-head(merged)
-nrow(merged)
-
 # ---------------------------------------------------------------
 # Remove outliers from meRIP data and log transform RNApol data |
 # ---------------------------------------------------------------
@@ -94,9 +76,6 @@ iqr <- IQR(merged$meRIP_WT)
 up <-  Q[2]+1.5*iqr # Upper Range  
 low<- Q[1]-1.5*iqr # Lower Range
 saved_values_WT <- subset(merged, merged$meRIP_WT > low & merged$meRIP_WT < up)
-head(saved_values_WT)
-nrow(saved_values_WT)
-
 saved_values_WT$PausIndex_WT <- log(saved_values_WT$PausIndex_WT+1)
 
 Q <- quantile(merged$meRIP_TKO, probs=c(.25, .75), na.rm = FALSE)
@@ -104,9 +83,6 @@ iqr <- IQR(merged$meRIP_TKO)
 up <-  Q[2]+1.5*iqr # Upper Range  
 low<- Q[1]-1.5*iqr # Lower Range
 saved_values_TKO <- subset(merged, merged$meRIP_TKO > low & merged$meRIP_TKO < up)
-head(saved_values_TKO)
-nrow(saved_values_TKO)
-
 saved_values_TKO$PausIndex_TKO <- log(saved_values_TKO$PausIndex_TKO+1)
 
 # ---------------------------------

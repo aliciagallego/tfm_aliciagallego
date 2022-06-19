@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#PATH="/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate/3_Normalization/Intersect_RefSeq_Normalized_MG9"
 OUT="/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/4_Input_genes"
 
 paste /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_12_realsize.txt /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_14_realsize.txt /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_16_realsize.txt /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_18_realsize.txt | awk -v OFS="\t" '($6>0.7 && $12>0.7 && $18>0.7 && $24>0.7 && $3-$2>20000){print $1,$2,$3,$4,1,$5}' > $OUT/MYGENES.bed
@@ -8,7 +7,6 @@ paste /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normaliz
 cat $OUT/MYGENES.bed | awk '{print $4}' | sort | uniq | while read LINE
 do
 	printf "chrZ\t1\t1\t1\t1\t1\t1\n" > REMOVE.ME
-
 	cat /home/cc/JoseMiguel/Genome_files/RefSeqGenes_mm10/ncbiRefSeqCurated.txt | grep -P "\t$LINE\t" | while read LINE2
 	do
 		PREVLENGTH=$(cat REMOVE.ME | head -1 | awk '{print $6-$5}')

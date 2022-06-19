@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 ##########################################
-## Normalize RNApolII (RefSeq long list) # 20220214
+## Normalize RNApolII (RefSeq long list) #
 ##########################################
 
 # -------
@@ -18,8 +18,6 @@ output_plots <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_Re
 # -------------------------------------
 GB_list = list.files(RNAPII_GB_path, pattern="*.bed")
 PR_list = list.files(RNAPII_PR_path, pattern="*.bed")
-GB_list
-PR_list
 
 for (i in seq_along(GB_list)) {
   filename <- sub("_.*", "", GB_list[i])

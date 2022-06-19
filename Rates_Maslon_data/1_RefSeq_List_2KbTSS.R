@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 #############################################################
-## Include 2Kb region at TSS (start) and TTS (end) extremes # 20220203
+## Include 2Kb region at TSS (start) and TTS (end) extremes #
 #############################################################
 
 # -------
@@ -38,10 +38,7 @@ print(count)
 aa<- ensembl$V1=="chrMT"
 bb <- ensembl$V1!="chrMT"
 bb <- ensembl[!ensembl$V1 == "chrMT",]
-
-nrow(ensembl)
 ensembl2 <- ensembl[!ensembl$V2 < 0,]
-nrow(ensembl2)
 
 # -----------
 # Save data |

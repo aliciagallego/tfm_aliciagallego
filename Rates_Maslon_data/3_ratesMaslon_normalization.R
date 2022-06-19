@@ -1,24 +1,25 @@
 #!/usr/bin/env Rscript
 
 ###########################################################
-## Normalize meRIP (Ensemble) and merge with Maslon rates # 20220203
+## Normalize meRIP (Ensemble) and merge with Maslon rates #
 ###########################################################
+
+# -----------
+# Libraries |
+# -----------
 library("ggpubr")
 
 # -------
 # Paths |
 # -------
 m6A_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_output/2_Intersect_bedtools/"
-#m6A_path <- "/home/oem/Documentos/Alicia/Maslon2019_2/Maslon2_output/2_Intersect_bedtools/"
 rates_Maslon_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_data/Elongation_rates_MaslonWT.txt"
-#rates_Maslon_path <- "/home/oem/Documentos/Alicia/Maslon2019_2/Maslon2_data/Elongation_rates_MaslonWT.txt"
-
 rates_out <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_output/"
+
 # ---------------------------------------
 # Open TXT data Maslon elongation rates |
 # ---------------------------------------
 rates_Maslon <- read.table(rates_Maslon_path,h=T,sep="\t",stringsAsFactors=FALSE)
-head(rates_Maslon)
 
 # ---------------------------------------------
 # Transform Maslon elongation rates to kb/min |
@@ -26,13 +27,11 @@ head(rates_Maslon)
 rates_Maslon[,4] = rates_Maslon[,4]/1000
 colnames(rates_Maslon) <- c("enst_id","R_squared","p_value","Maslon_Kb_min","tx_length","FPKM_control","boundary_5min",
                         "boundary_15min","gene_short_name")
-head(rates_Maslon)
 
 # -------------------------------------
 # Open BED data meRIP-Ensembl aligned |
 # -------------------------------------
 BED_list = list.files(m6A_path, pattern="*.bed")
-BED_list
 
 for (i in seq_along(BED_list)) {
   filename <- sub("_2Kb.bed*", "", BED_list[i])
@@ -73,12 +72,6 @@ WU2_IP <- subset(WU2_IP, meRIP_norm!="NaN" & meRIP_norm!=0 & meRIP_norm!="Inf")
 TU1_IP <- subset(TU1_IP, meRIP_norm!="NaN" & meRIP_norm!=0 & meRIP_norm!="Inf")
 TU2_IP <- subset(TU2_IP, meRIP_norm!="NaN" & meRIP_norm!=0 & meRIP_norm!="Inf")
 
-nrow(WU1_IP)
-nrow(WU2_IP)
-nrow(TU1_IP)
-nrow(TU2_IP)
-head(TU1_IP)
-
 # -----------------
 # Merge m6A files |
 # -----------------
@@ -97,7 +90,6 @@ colnames(mergedWT) <- c("Chr","Start","End","Gene.stable.ID","Transcript.stable.
                         "Gene_type","meRIP_WT1","meRIP_WT2")
 
 mergedWT$meRIP_WT <- (mergedWT$meRIP_WT1+mergedWT$meRIP_WT2)/2
-head(mergedWT)
 
 # TKO
 # ---
@@ -113,7 +105,6 @@ colnames(mergedTKO) <- c("Chr","Start","End","Gene.stable.ID","Transcript.stable
                         "Gene_type","meRIP_TKO1","meRIP_TKO2")
 
 mergedTKO$meRIP_TKO <- (mergedTKO$meRIP_TKO1+mergedTKO$meRIP_TKO2)/2
-head(mergedTKO)
 
 mergedWT[which(mergedWT$Transcript.stable.ID == "ENSMUST00000071543"), ]
 
@@ -136,10 +127,6 @@ rates_Maslon_m6A_WT<- Reduce(function(x,y) merge(x = x, y = y, by.x = "Transcrip
                                               "meRIP_WT1","meRIP_WT2","meRIP_WT","Transcript.stable.ID")],
                                   rates_Maslon[,c("Maslon_Kb_min","gene_short_name","enst_id")]))
 
-head(rates_Maslon_m6A_WT)
-nrow(rates_Maslon_m6A_WT)
-nrow(mergedWT)
-nrow(rates_Maslon)
 lost <- nrow(rates_Maslon) - nrow(rates_Maslon_m6A_WT)
 print(paste(lost,"transcripts lost from Maslon list after merge"))
 
@@ -159,8 +146,6 @@ up <-  Q[2]+1.5*iqr # Upper Range
 low<- Q[1]-1.5*iqr # Lower Range
 saved_values_WT <- subset(rates_Maslon_m6A_WT, rates_Maslon_m6A_WT$meRIP_WT > low & rates_Maslon_m6A_WT$meRIP_WT < up)
 
-head(saved_values_WT)
-nrow(saved_values_WT)
 lost2<-nrow(rates_Maslon)-nrow(saved_values_WT)
 print(paste(lost2,"transcripts lost from Maslon list after merge and meRIP outlier removal"))
 
@@ -174,7 +159,6 @@ write.table(saved_values_WT,
 # ----------------------------
 # Mann-Whitney-Wilcoxon test |
 # ----------------------------
-
 sink("meRIP_All_WilcoxTest.txt")
 wilcox.test(mergedWT$meRIP_WT, mergedTKO$meRIP_TKO)
 sink()
@@ -219,7 +203,7 @@ plot(rates_Maslon_m6A_WT$Maslon_Kb_min,
      ylab="kb/min",
      lwd = 2,
      type = "l")
-#rates_Maslon_m6A_WT <- rates_Maslon_m6A_WT[order(rates_Maslon_m6A_WT$Reads_norm_WT,decreasing = TRUE),] 
+
 lines(rates_Maslon_m6A_WT$meRIP_WT,
       col="grey",
       lwd = 1,
@@ -232,7 +216,6 @@ dev.off()
 # Correlation test |
 # ------------------
 cor.test(saved_values_WT$Reads_norm_WT, saved_values_WT$elongation_b_min, method=c("pearson", "kendall", "spearman"))
-cor.test(merged$TTseq_WT, merged$RNApol_WT_GB, method=c("pearson"))
 
 # Pearson resulted to be more significant
 png(file = paste0(rates_out, "5_Plots/Pearson_MaslonElongation_meRIP_WT_2Kb.png"))

@@ -1,13 +1,13 @@
 #!/usr/bin/env Rscript
 
 #####################################################################################
-## Get promoters coords (+-500bp) from RefSeq transcript start/end coords Long List # 20220214
+## Get promoters coords (+-500bp) from RefSeq transcript start/end coords Long List #
 #####################################################################################
 
 # -------
 # Paths |
 # -------
-refseq_path <- "/media/cc/A/Alicia/Genome_files/Josemi/RefSeq_genes.bed" # from Josemi (20621 genes)
+refseq_path <- "/media/cc/A/Alicia/Genome_files/Josemi/RefSeq_genes.bed"
 genebody_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Gene_selection_RefSeq/Input_genes_RefSeq_Long_List_GeneBody.bed" # (20546 genes)
 output <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Gene_selection_RefSeq/"
 
@@ -16,9 +16,6 @@ output <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Gene_selection_Ref
 # -----------
 refseq <- read.table(refseq_path,h=F,sep="\t",stringsAsFactors=F)
 genebody <- read.table(genebody_path,h=F,sep="\t",stringsAsFactors=F)
-nrow(refseq)
-nrow(genebody)
-head(genebody)
 
 # --------------------------------------------------
 # Generate new start/end coords from previous ones |
@@ -57,7 +54,6 @@ refseq <- refseq[-c(7,8)]
 # Remove transcripts absent in Gene body list |
 # ---------------------------------------------
 refseq <- refseq[refseq$V4 %in% genebody$V4, ]
-nrow(refseq)
 
 # -----------
 # Save data |

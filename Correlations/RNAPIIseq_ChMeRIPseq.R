@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 #####################################################
-## Correlations RNApolII and m6A (RefSeq Long List) # 20220214
+## Correlations RNAPII ChIPseq and m6A (ChMeRIPseq) #
 #####################################################
 
 # -----------
@@ -29,9 +29,6 @@ RNApolPR <- read.table(RNApolPR_path, h=T, sep="\t", stringsAsFactors=F)
 m6AWT <- read.table(m6AWT_path, h=T,sep="\t",stringsAsFactors=F)
 m6ATKO <- read.table(m6ATKO_path, h=T,sep="\t",stringsAsFactors=F)
 
-head(RNApolGB)
-head(RNApolPR)
-
 # -------------
 # Merge files |
 # -------------
@@ -44,7 +41,6 @@ merged<- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F),
 colnames(merged) <- c("Gene_name","Chr","Start","End","Strand","meRIP_WT","meRIP_TKO",
                       "RNApol_WT_GB","RNApol_TKO_GB","RNApol_WT_PR","RNApol_TKO_PR")
 
-nrow(merged)
 # ------------------
 # Save merged file |
 # ------------------
@@ -59,9 +55,6 @@ iqr <- IQR(merged$meRIP_WT)
 up <-  Q[2]+1.5*iqr # Upper Range  
 low<- Q[1]-1.5*iqr # Lower Range
 saved_values_WT <- subset(merged, merged$meRIP_WT > low & merged$meRIP_WT < up)
-head(saved_values_WT)
-nrow(saved_values_WT)
-
 saved_values_WT$RNApol_WT_GB <- log(saved_values_WT$RNApol_WT_GB*10000000+1)
 saved_values_WT$RNApol_WT_PR <- log(saved_values_WT$RNApol_WT_PR*10000000+1)
 
@@ -70,9 +63,6 @@ iqr <- IQR(merged$meRIP_TKO)
 up <-  Q[2]+1.5*iqr # Upper Range  
 low<- Q[1]-1.5*iqr # Lower Range
 saved_values_TKO <- subset(merged, merged$meRIP_TKO > low & merged$meRIP_TKO < up)
-head(saved_values_TKO)
-nrow(saved_values_TKO)
-
 saved_values_TKO$RNApol_TKO_GB <- log(saved_values_TKO$RNApol_TKO_GB*10000000+1)
 saved_values_TKO$RNApol_TKO_PR <- log(saved_values_TKO$RNApol_TKO_PR*10000000+1)
 
@@ -80,7 +70,6 @@ saved_values_TKO$RNApol_TKO_PR <- log(saved_values_TKO$RNApol_TKO_PR*10000000+1)
 # Correlation test |
 # ------------------
 cor.test(merged$TTseq_WT, merged$RNApol_WT_GB, method=c("pearson", "kendall", "spearman"))
-cor.test(merged$TTseq_WT, merged$RNApol_WT_GB, method=c("pearson"))
 
 # Spearman resulted to be more significant
 png(file = paste0(output, "Spearman_RNApolII_meRIP_WT_GB_500bp.png"))

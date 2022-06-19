@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 ############################################
-## Retain the first 20 Kb from TSS (start) # 20220325
+## Retain the first 20 Kb from TSS (start) #
 ############################################
 
 # -------
@@ -15,7 +15,7 @@ output <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_data/"
 # -----------
 refseq <- read.table(refseq_path,h=F,sep="\t",stringsAsFactors=FALSE,
                      col.names = c("Chr","Start","End","Gene_name","NA1","Strand"))
-head(refseq)
+
 # ----------------------------------------
 # Transform start - 2Kb and start + 50Kb |
 # ----------------------------------------
@@ -54,9 +54,8 @@ head(refseq)
 # Remove transcripts with negative coords (these are mitochondrial and rare sequences) |
 # --------------------------------------------------------------------------------------
 aa<- refseq$V1=="chrMT" #0
-aa
 refseq <- refseq[!refseq$Start < 0,] #2 genes
-nrow(refseq)
+
 # -----------
 # Save data |
 # -----------

@@ -1,4 +1,0 @@
-Scripts destinated to merge elongation rate data reported by Maslon et al. (2019) (transcripts with Ensembl IDs) and own data from ChMeRIP-seq (m6A levels). 
-
-m6A levels were calculated in a protein-coding transcript from Ensembl (150,000 genes). Start/End coordinates were redefined to include TSS-2Kb and TTS+1Kb
-

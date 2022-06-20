@@ -54,6 +54,8 @@ saved_values_WT <- subset(merged, merged$meRIP_WT > low & merged$meRIP_WT < up)
 head(saved_values_WT)
 nrow(saved_values_WT)
 
+# For replicate samples use:
+
 # meRIP_WT1
 #Q <- quantile(merged$meRIP_WT1, probs=c(.25, .75), na.rm = FALSE)
 #iqr <- IQR(merged$meRIP_WT1)
@@ -77,6 +79,8 @@ up <-  Q[2]+1.5*iqr # Upper Range
 low<- Q[1]-1.5*iqr # Lower Range
 saved_values_TKO <- subset(merged, merged$meRIP_TKO > low & merged$meRIP_TKO < up)
 nrow(saved_values_TKO)
+
+# For replicate samples use:
 
 # meRIP_TKO1
 #Q <- quantile(merged$meRIP_TKO1, probs=c(.25, .75), na.rm = FALSE)

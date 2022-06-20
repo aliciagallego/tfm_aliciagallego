@@ -2,7 +2,7 @@
 
 **"Transcription elongation rates connect chromatin structure and N6-methyladenosine (m6A) deposition on nascent RNAs"**  
 
-Alicia Gallego, June 2022  
+Alicia Gallego Jiménez, June 2022  
 MSc in Bioinformatics and Computational Biology, Univerisdad Autónoma de Madrid (UAM)  
 contact: alicia.gallego@estudiante.uam.es  
 

@@ -3,8 +3,6 @@
 # This script generates BigWig files from bam files 
 # -bs: size of the bins, in bases, for the output of the bigwig file (default: 50)
 
-#NUMS=$(TKO0 TKO5 WT0 WT5);
-
 NUMS=$(seq 11 18);
 
 for NUM in $NUMS
@@ -23,4 +21,3 @@ do
 	bamCoverage -bs 1 -b $BAM --normalizeUsing RPKM --filterRNAstrand reverse -o $OUTRV
 done
 wait
-

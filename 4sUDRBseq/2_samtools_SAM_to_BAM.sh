@@ -12,6 +12,3 @@ do
 	samtools view -S -b $SAM > $SALIDA
 done
 wait
-
-
-

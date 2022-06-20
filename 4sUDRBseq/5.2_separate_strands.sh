@@ -3,10 +3,6 @@
 # This script separates sequences from Watson and Crick strands and generate an index (.bam.bai) for IGV visualization
 # It must be launched from the directory in which these files will be generated
 
-# WARNING: this script didn't work well because fastq reads were aligned against mm10 genome by bowtie2 without performing
-# prior reverse complement. Bowtie2 is thought for RNAseq fastq aligments against a transcriptome, so this program does not perform
-# the reverse complementary automaticly. Thus the obtained Watson and Crick strands were in the other way around.
-
 set -ue
 
 NUMS=$(seq 11 18);

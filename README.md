@@ -6,7 +6,7 @@ Alicia Gallego Jiménez, June 2022
 MSc in Bioinformatics and Computational Biology, Univerisdad Autónoma de Madrid (UAM)  
 contact: alicia.gallego@estudiante.uam.es  
 
-## SEQUENCING EXPERIMENTS ANALYSES INCLUDED:  
+## SEQUENCING EXPERIMENTS INCLUDED:  
 - **4sUDRBseq**: scripts for processing transcription elongation rates (data from in this work)  
 - **ChMeRIPseq**: scripts for processing information about m6A modification levels in chromatin-enriched RNAs (cheRNAs) (data from Fernandez-Justel et al. 2021)  
 - **CheRNAseq**: scripts for processing data about expression levels in chromatin-enriched RNAs (cheRNAs) (data from Fernandez-Justel et al. 2021)  

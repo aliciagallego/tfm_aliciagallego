@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This script counts base coverage per chromosome from aligned SAM files and prints them into the 'profile_' files
+
 process () {
 
 	cat $1 | grep -vP "^@" | awk -v OFS="\t" '($5>5 && $7=="=" && $9>0 && $9<800){print $3,$4,$4+$9}' | sort -k1,1 -k2,2n -k3,3n > REMOVE.ME.bed
@@ -14,8 +16,8 @@ process () {
         done
 }
 
-
 THISDIR=/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation
+
 for FILE in /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Visualize_alignments/MG10_RNA_DRB-4sU/2_Sorting/Pull/Pull_sam/*.sam
 do
 	NAME=$(basename $FILE .sam)

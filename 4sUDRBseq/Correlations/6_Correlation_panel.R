@@ -233,8 +233,3 @@ pairs.panels(merged_TKO_alldata[c(6,7,8,10)],
              ci=T,
              digits=3, cex=1)
 dev.off()
-
-
-ggpairs(merged_TKO_alldata, columns = c(6,7,8,10), lower=list(continuous="smooth"),
-        diag = list(continuous = wrap("barDiag", colour = "blue")),
-        upper = list(continuous = wrap("cor", size = 5))) 

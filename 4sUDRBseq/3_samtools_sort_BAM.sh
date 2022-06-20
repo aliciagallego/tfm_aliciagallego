@@ -12,4 +12,3 @@ do
 	samtools sort $BAM -o $SALIDA
 done
 wait
-

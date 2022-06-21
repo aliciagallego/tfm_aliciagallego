@@ -1,7 +1,7 @@
 #!/bin/bash
 
-BAM="/media/cc/A/Josemi/NGS/cheRNA/BAMs/*.bam"
-OUT="/media/cc/A/Alicia/NGS/cheRNA/cheRNA_output"
+BAM="/path/cheRNA/Alignments/*.bam"
+OUT="/path/cheRNA/"
 
 for FILE in $BAM
 do	

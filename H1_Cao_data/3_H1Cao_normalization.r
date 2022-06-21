@@ -1,57 +1,45 @@
 #!/usr/bin/env Rscript
 
-########################################################
-## Normalize H1 Cao et al 2013 data (RefSeq long list) #
-########################################################
+#########################################################
+## Normalize H1 Cao et al. 2013 data (RefSeq long list) #
+#########################################################
+# data from: https://doi.org/10.1371/journal.pgen.1003417
 
 # -------
 # Paths |
 # -------
-H1c_path <- "/media/cc/B/Alicia/H1_Cao/H1_Cao_output/1_bedtools_intersect/H1c_2kbTSS.bed"
-H1d_path <- "/media/cc/B/Alicia/H1_Cao/H1_Cao_output/1_bedtools_intersect/H1d_2kbTSS.bed"
-repli_path <- "/media/cc/B/Alicia/H1_Cao/H1_Cao_output/1_bedtools_intersect/SRR828743_2kbTSS.bed"
-output <- "/media/cc/B/Alicia/H1_Cao/H1_Cao_output/"
+TTseq_path <- "/path/4suDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull.txt"
+refseq_path <- "/path/Input_genes/Input_genes_20Kb.txt"
 
-# -----------
-# Open data |
-# -----------
-H1c <- read.table(H1c_path,h=F,sep="\t",stringsAsFactors=F)
-H1d <- read.table(H1d_path,h=F,sep="\t",stringsAsFactors=F)
-repli <- read.table(repli_path,h=F,sep="\t",stringsAsFactors=F)
-tail(H1d)
+H1c_path <- "/path/H1_Cao/Intersect/H1c_2kbTSS.bed"
+H1d_path <- "/path/H1_Cao/Intersect/H1d_2kbTSS.bed"
 
-# ------------------------------------
-# Total reads (data from experiment) |
-# ------------------------------------
-H1c_reads <-	55791364
-H1d_reads <-	150519461
-
-# ---------------
-# Normalization |
-# ---------------
-
-H1c$V8 = H1c$V7/H1c_reads*10e06
-H1d$V8 = H1d$V7/H1d_reads*10e06
-
-# Colnames
-names_vec <- c("Chr", "Start", "End", "Gene_name", "NA1","Strand", "readsCao","readsCaonorm")
-
-colnames(H1c) <- names_vec
-colnames(H1d) <- names_vec
-
-head(H1c)
-
-# -------
-# Paths |
-# -------
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull.txt"
-refseq_path <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/4_Input_genes/Input_genes_20Kb.txt")
+output <- "/path/H1_Cao/"
 
 # -----------
 # Open data |
 # -----------
 TTseq <- read.table(TTseq_path,h=T,sep="\t",stringsAsFactors=FALSE)
 refseq <- read.table(refseq_path,h=T,sep="\t",stringsAsFactors=FALSE)
+
+H1c <- read.table(H1c_path,h=F,sep="\t",stringsAsFactors=F)
+H1d <- read.table(H1d_path,h=F,sep="\t",stringsAsFactors=F)
+
+# ----------------------------------------------------
+# Total reads (data from Cao et al. 2013 experiment) |
+# ----------------------------------------------------
+H1c_reads <-	55791364
+H1d_reads <-	150519461
+
+# --------------------------------
+# Normalization H1c and H1d data |
+# --------------------------------
+H1c$V8 = H1c$V7/H1c_reads*10e06
+H1d$V8 = H1d$V7/H1d_reads*10e06
+
+names_vec <- c("Chr", "Start", "End", "Gene_name", "NA1","Strand", "readsCao","readsCaonorm")
+colnames(H1c) <- names_vec
+colnames(H1d) <- names_vec
 
 # ----------------------------------------------------
 # Transform chr20, chr21 to chrX,chrY in refseq list | 

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# This script counts base coverage per chromosome from aligned SAM files and prints them into the 'profile_' files
+# This script computes coverage per base for each chromosome
+# Inputs: SAM alignments and a list of chromosome sizes
+# Outputs: profile_$chr 
 
 process () {
 
@@ -9,16 +11,16 @@ process () {
 	for NUM in $NUMS X Y
         do
                 cat REMOVE.ME.bed | grep -P "chr$NUM\t" > "chr"$NUM".bed"
-                cat /home/cc/JoseMiguel/Genome_files/mm10/chrom.sizes | grep -P "chr$NUM\t" > GENOME$NUM
+                cat /path/Genome_files/mm10/chrom.sizes | grep -P "chr$NUM\t" > GENOME$NUM
 		#{printf ("%-20d\n", $3)} removes scientific notation for big numbers
                 genomeCoverageBed -d -i "chr"$NUM".bed" -g GENOME$NUM | awk '{printf ("%-20d\n", $3)}' | tr "\n" "\t" > profile_$NUM
                 rm -f GENOME$NUM
         done
 }
 
-THISDIR=/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation
+THISDIR=/path/Rate_calculation
 
-for FILE in /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Visualize_alignments/MG10_RNA_DRB-4sU/2_Sorting/Pull/Pull_sam/*.sam
+for FILE in /path/Pull/*.sam
 do
 	NAME=$(basename $FILE .sam)
 	mkdir $NAME

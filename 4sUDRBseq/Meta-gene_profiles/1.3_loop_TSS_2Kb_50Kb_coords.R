@@ -59,7 +59,7 @@ refseq <- refseq[!refseq$Start < 0,] #5 genes
 # Save data |
 # -----------
 write.table(refseq, 
-            file = paste0(output,"RefSeq_LongList_TSS_2Kb50Kb_OK.bed"),
+            file = paste0(output,"RefSeq_LongList_TSS_2Kb50Kb.bed"),
             quote = F, 
             sep="\t", 
             col.names = F, 

@@ -7,15 +7,15 @@
 # -------
 # Paths |
 # -------
-refseq_path <- "/media/cc/A/Alicia/Genome_files/Josemi/RefSeq_genes.bed"
-output <- "/media/cc/A/Alicia/NGS/TTseq_Feb2022/TTseq_data/"
+refseq_path <- "/path/Genome_files/RefSeq_genes.bed"
+output <- "/path/4suDRB/"
 
 # -----------
 # Open data |
 # -----------
 refseq <- read.table(refseq_path,h=F,sep="\t",stringsAsFactors=FALSE,
                      col.names = c("Chr","Start","End","Gene_name","NA1","Strand"))
-head(refseq)
+
 # ----------------------------------------
 # Transform start - 2Kb and start + 50Kb |
 # ----------------------------------------

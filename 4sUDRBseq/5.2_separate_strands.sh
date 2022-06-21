@@ -10,11 +10,6 @@ NUMS=$(seq 11 18);
 for NUM in $NUMS
 do
 	BAM="/path/4sUDRB/MG9-"$NUM".sorted.bam"
-
-	# Get the bam file from the command line
-	#BAM=$1
-	#TARGET_D=$2
-
 	FILE=$(basename $BAM)
 	NAME=${FILE%.*}
 	

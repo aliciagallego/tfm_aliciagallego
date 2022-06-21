@@ -16,12 +16,13 @@ library("reshape2")
 # RNAPII levels in GB and PR calculated in the LongList transcriptome (20621 genes) from RefSeq using Josemi's definition:
 # GB: start coord + 500 bp / end coord with no changes
 # PR: start coord - 500 bp / start coord + 500 bp
-RNApolGB_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/GeneBody/RNAPII_RefSeq_LongList_GB_500bp.bed"
-RNApolPR_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/Promoters/RNAPII_RefSeq_LongList_PR_500bp.bed"
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull_processed_without05.txt"
 
-output <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/6_Correlations/")
-output3 <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/TKO_comparisons/")
+RNApolGB_path <- "/path/RNAPII/Normalized_data/GeneBody/RNAPII_RefSeq_LongList_GB_500bp.bed"
+RNApolPR_path <- "/path/RNAPII/Normalized_data/Promoters/RNAPII_RefSeq_LongList_PR_500bp.bed"
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull_processed_without05.txt"
+
+output <- ("/path/4sUDRB/Elongation_rate/Correlations/")
+output3 <- ("/path/4sUDRB/Elongation_rate/TKOvsWT_rates/TKO_comparisons/")
 
 # -----------
 # Open data |

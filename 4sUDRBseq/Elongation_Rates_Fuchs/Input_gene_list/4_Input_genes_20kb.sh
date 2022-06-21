@@ -3,7 +3,7 @@
 # This script merges the list of genes with significant expression in the 4sU-DRBseq experiment (previously computed) with a reference transcriptome
 # and saves the longest version of each transcript including a number of parameters needed for the elongation rate calculation, 
 # i.e.: ID, chr, strand, start coord, end coord, CDS start, CDS end, Exon number, Exon starts, Exon ends, splice variants
-# The generated file is the input_gene.txt list used for elongation rate calculation
+# The generated file is the Input_gene_list.txt used as input for elongation rate calculation
 
 OUT="/path/Input_genes"
 

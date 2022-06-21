@@ -1,6 +1,7 @@
+#!/bin/bash
+
 # Tag directory: is a directory that contains several files describing your data. 
 # The input file for making a tag directory is the output of the mapping process *.sam
-
 
 NUMS=$(seq 11 18);
 

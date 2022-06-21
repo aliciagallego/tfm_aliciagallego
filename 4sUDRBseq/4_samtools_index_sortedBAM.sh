@@ -7,7 +7,7 @@ NUMS=$(seq 11 18);
 
 for NUM in $NUMS
 do
-	SORTEDBAM="/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Visualize_alignments/MG10_RNA_DRB-4sU/2_Sorting/MG9-"$NUM".sorted.bam"
+	SORTEDBAM="/path/4sUDRB/MG9-"$NUM".sorted.bam"
 
 	samtools index $SORTEDBAM
 done

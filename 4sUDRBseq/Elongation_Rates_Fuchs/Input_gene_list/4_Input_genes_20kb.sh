@@ -1,13 +1,18 @@
 #!/bin/bash
 
-OUT="/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/4_Input_genes"
+# This script merges the list of genes with significant expression in the 4sU-DRBseq experiment (previouslu computed) with a reference transcriptome
+# and saves the longest version of each transcript including a number of parameters needed for the elongation rate calculation, 
+# i.e.: ID, chr, strand, start coord, end coord, CDS start, CDS end, Exon number, Exon starts, Exon ends, splice variants
+# The generated file is the input_gene.txt list used for elongation rate calculation
 
-paste /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_12_realsize.txt /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_14_realsize.txt /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_16_realsize.txt /media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_18_realsize.txt | awk -v OFS="\t" '($6>0.7 && $12>0.7 && $18>0.7 && $24>0.7 && $3-$2>20000){print $1,$2,$3,$4,1,$5}' > $OUT/MYGENES.bed
+OUT="/path/Input_genes"
+
+paste /path/Intersect_RefSeq20Kb_Normalized_MG9_12.txt /path/Intersect_RefSeq20Kb_Normalized_MG9_14.txt /path/Intersect_RefSeq20Kb_Normalized_MG9_16.txt /path/Intersect_RefSeq20Kb_Normalized_MG9_18.txt | awk -v OFS="\t" '($6>0.7 && $12>0.7 && $18>0.7 && $24>0.7 && $3-$2>20000){print $1,$2,$3,$4,1,$5}' > $OUT/MYGENES.bed
 
 cat $OUT/MYGENES.bed | awk '{print $4}' | sort | uniq | while read LINE
 do
 	printf "chrZ\t1\t1\t1\t1\t1\t1\n" > REMOVE.ME
-	cat /home/cc/JoseMiguel/Genome_files/RefSeqGenes_mm10/ncbiRefSeqCurated.txt | grep -P "\t$LINE\t" | while read LINE2
+	cat /path/RefSeqGenes_mm10/ncbiRefSeqCurated.txt | grep -P "\t$LINE\t" | while read LINE2
 	do
 		PREVLENGTH=$(cat REMOVE.ME | head -1 | awk '{print $6-$5}')
 		LENGTH=$(echo $LINE2 | awk '{print $6-$5}')

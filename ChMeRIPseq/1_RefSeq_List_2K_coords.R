@@ -7,8 +7,8 @@
 # -------
 # Paths |
 # -------
-refseq_path <- "/home/agj/Documentos/TFM/RNApolII_2/RefSeq_genes.bed"
-output <- "/home/agj/Documentos/TFM/meRIP_2/meRIP2_output/1_Gene_selection_RefSeq/"
+refseq_path <- "/path/Genome_files/RefSeq_genes.bed"
+output <- "/path/meRIP/Gene_selection_RefSeq/"
 
 # -----------
 # Open data |

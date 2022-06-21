@@ -7,8 +7,8 @@
 # -------
 # Paths |
 # -------
-refseq_path <- "/media/cc/A/Alicia/Genome_files/Josemi/RefSeq_genes.bed"
-output <- "/media/cc/B/Alicia/H1_Cao/H1_Cao_output/1_bedtools_intersect/"
+refseq_path <- "/path/Genome_files/RefSeq_genes.bed"
+output <- "/path/H1_Cao/Intersect/"
 
 # -----------
 # Open data |

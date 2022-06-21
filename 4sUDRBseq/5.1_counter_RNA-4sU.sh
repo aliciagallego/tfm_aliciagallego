@@ -2,7 +2,7 @@
 
 # This script counts the number of aligned reads per sample
 
-SORTEDBAM="/media/cc/B/Josemi/TTseq_Feb2022/Alignments/MG10_RNA_DRB-4sU/*.sam"
+SORTEDBAM="/path/4sUDRB/Alignments/*.sam"
 
 for FILE in $SORTEDBAM
 do	

@@ -17,7 +17,7 @@ library("reshape2")
 Pausing_path <- "/path/RNAPII/Pausing_index/RNAPII_RefSeq_LongList_PausingIndex_500bp.txt"
 TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull_processed_without05.txt"
 
-output <- ("/path/4sUDRB/Elongation_rate/Correlations/")
+output <- "/path/4sUDRB/Elongation_rate/Correlations/"
 
 # -----------
 # Open data |

@@ -15,9 +15,9 @@ library(dplyr)
 # -------
 # Paths |
 # -------
-refseq_path <- "/media/cc/A/Alicia/Genome_files/Josemi/RefSeq_genes.bed"
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/2_Intersect_RefSeqBED20Kb_BAM/"
-output <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/3_Normalization/"
+refseq_path <- "/path/RefSeq_genes.bed"
+TTseq_path <- "/path/Intersect_RefSeqBED20Kb_BAM/"
+output <- "/path/Normalization/"
 
 # -----------
 # Open data |
@@ -44,9 +44,9 @@ MG9_14_reads <- 131822641
 MG9_16_reads <- 124134871
 MG9_18_reads <- 85923486
 
-# ------------------
-# 1. Normalization | only by total reads (no transcript size)
-# ------------------
+# ---------------------------------
+# 1. Normalization by total reads | 
+# ---------------------------------
 MG9_12$TTseq_MG9_12 = (MG9_12$TTseq_MG9_12/MG9_12_reads) * 10000000
 MG9_14$TTseq_MG9_14 = (MG9_14$TTseq_MG9_14/MG9_14_reads) * 10000000
 MG9_16$TTseq_MG9_16 = (MG9_16$TTseq_MG9_16/MG9_16_reads) * 10000000
@@ -64,33 +64,36 @@ refseq <- refseq[!(refseq$Strand == '-' & (refseq$End-20000<0)),]
 MG9_12_merged<- Reduce(function(x,y) merge(x = x, y = y, by="Gene_name", sort = F),
                        list(MG9_12[,c("Gene_name","Chr","Strand","TTseq_MG9_12")],
                             refseq[,c("Gene_name","Start", "End")]))
+
 MG9_14_merged<- Reduce(function(x,y) merge(x = x, y = y, by="Gene_name", sort = F),
                        list(MG9_14[,c("Gene_name","Chr","Strand","TTseq_MG9_14")],
                             refseq[,c("Gene_name","Start", "End")]))
+
 MG9_16_merged<- Reduce(function(x,y) merge(x = x, y = y, by="Gene_name", sort = F),
                        list(MG9_16[,c("Gene_name","Chr","Strand","TTseq_MG9_16")],
                             refseq[,c("Gene_name","Start", "End")]))
+
 MG9_18_merged<- Reduce(function(x,y) merge(x = x, y = y, by="Gene_name", sort = F),
                        list(MG9_18[,c("Gene_name","Chr","Strand","TTseq_MG9_18")],
                             refseq[,c("Gene_name","Start", "End")]))
 
-MG9_12_merged <- select(MG9_12_merged, Chr, Start, End, Gene_name,Strand,TTseq_MG9_12)
-MG9_14_merged <- select(MG9_14_merged, Chr, Start, End, Gene_name,Strand,TTseq_MG9_14)
-MG9_16_merged <- select(MG9_16_merged, Chr, Start, End, Gene_name,Strand,TTseq_MG9_16)
-MG9_18_merged <- select(MG9_18_merged, Chr, Start, End, Gene_name,Strand,TTseq_MG9_18)
+MG9_12_merged <- select(MG9_12_merged, Chr, Start, End, Gene_name, Strand,TTseq_MG9_12)
+MG9_14_merged <- select(MG9_14_merged, Chr, Start, End, Gene_name, Strand,TTseq_MG9_14)
+MG9_16_merged <- select(MG9_16_merged, Chr, Start, End, Gene_name, Strand,TTseq_MG9_16)
+MG9_18_merged <- select(MG9_18_merged, Chr, Start, End, Gene_name, Strand,TTseq_MG9_18)
 
 # -----------
 # Save data |
 # -----------
 write.table(MG9_12_merged, 
-            file = paste0(output,"With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_12_realsize.txt"),
+            file = paste0(output,"Intersect_RefSeq20Kb_Normalized_MG9_12.txt"),
             quote = F, sep="\t", col.names = T, row.names = F)  
 write.table(MG9_14_merged, 
-            file = paste0(output,"With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_14_realsize.txt"),
+            file = paste0(output,"Intersect_RefSeq20Kb_Normalized_MG9_14.txt"),
             quote = F, sep="\t", col.names = T, row.names = F)  
 write.table(MG9_16_merged, 
-            file = paste0(output,"With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_16_realsize.txt"),
+            file = paste0(output,"Intersect_RefSeq20Kb_Normalized_MG9_16.txt"),
             quote = F, sep="\t", col.names = T, row.names = F)  
 write.table(MG9_18_merged, 
-            file = paste0(output,"With_real_transcript_size/Intersect_RefSeq20Kb_Normalized_MG9_18_realsize.txt"),
+            file = paste0(output,"Intersect_RefSeq20Kb_Normalized_MG9_18.txt"),
             quote = F, sep="\t", col.names = T, row.names = F)  

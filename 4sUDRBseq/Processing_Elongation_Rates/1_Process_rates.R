@@ -13,7 +13,7 @@ library("vioplot")
 # Paths |
 # -------
 TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull.txt"
-refseq_path <- ("/path/Input_genes/Input_genes_20Kb.txt")
+refseq_path <- "/path/Input_genes/Input_genes_20Kb.txt"
 
 m6AWT_path <- "/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
 m6ATKO_path <-"/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"

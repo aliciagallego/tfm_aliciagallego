@@ -101,11 +101,9 @@ if nargin < 2 || isempty(sel)
     sel = (max(x0)-min(x0))/4;
 elseif ~isnumeric(sel) || ~isreal(sel)
     sel = (max(x0)-min(x0))/4;
-    warning('PEAKFINDER:InvalidSel',... 
-        'The selectivity must be a real scalar.  A selectivity of %.4g will be used',sel)
+    warning('PEAKFINDER:InvalidSel','The selectivity must be a real scalar.  A selectivity of %.4g will be used',sel)
 elseif numel(sel) > 1
-    warning('PEAKFINDER:InvalidSel',...
-        'The selectivity must be a scalar.  The first selectivity value in the vector will be used.')
+    warning('PEAKFINDER:InvalidSel','The selectivity must be a scalar.  The first selectivity value in the vector will be used.')
     sel = sel(1);
 end
 
@@ -113,12 +111,10 @@ if nargin < 3 || isempty(thresh)
     thresh = [];
 elseif ~isnumeric(thresh) || ~isreal(thresh)
     thresh = [];
-    warning('PEAKFINDER:InvalidThreshold',...
-        'The threshold must be a real scalar. No threshold will be used.')
+    warning('PEAKFINDER:InvalidThreshold','The threshold must be a real scalar. No threshold will be used.')
 elseif numel(thresh) > 1
     thresh = thresh(1);
-    warning('PEAKFINDER:InvalidThreshold',...
-        'The threshold must be a scalar.  The first threshold value in the vector will be used.')
+    warning('PEAKFINDER:InvalidThreshold','The threshold must be a scalar.  The first threshold value in the vector will be used.')
 end
 
 if nargin < 4 || isempty(extrema)

@@ -7,28 +7,28 @@
 # -----------
 # Libraries |
 # -----------
-library(GGally)
-library(psych)
-library(ggpairs)
-library(colorspace)
+library("GGally")
+library("psych")
+library("ggpairs")
+library("colorspace")
 
 # -------
 # Paths |
 # -------
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull.txt"
-refseq_path <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/4_Input_genes/Input_genes_20Kb.txt")
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull.txt"
+refseq_path <- ("/path/Input_genes/Input_genes_20Kb.txt")
 
-m6AWT_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
-m6ATKO_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
+m6AWT_path <- "/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
+m6ATKO_path <-"/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
 
-RNApolGB_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/GeneBody/RNAPII_RefSeq_LongList_GB_500bp.bed"
-RNApolPR_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/Promoters/RNAPII_RefSeq_LongList_PR_500bp.bed"
+RNApolGB_path <- "/path/RNAPII/Normalized_data/GeneBody/RNAPII_RefSeq_LongList_GB_500bp.bed"
+RNApolPR_path <- "/path/RNAPII/Normalized_data/Promoters/RNAPII_RefSeq_LongList_PR_500bp.bed"
 
-Pausing_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Pausing_index/RNAPII_RefSeq_LongList_PausingIndex_500bp.txt"
+Pausing_path <- "/path/RNAPII/Pausing_index/RNAPII_RefSeq_LongList_PausingIndex_500bp.txt"
 
-cheRNA_path <- "/media/cc/A/Alicia/NGS/cheRNA/cheRNA_output/2_Normalized_data/cheRNA_RefSeq_LongList_Normalized.bed"
+cheRNA_path <- "/path/cheRNA/Normalized_data/cheRNA_RefSeq_LongList_Normalized.bed"
 
-output <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/6_Correlations/")
+output <- "/path/4sUDRB/Elongation_rate/Correlations/"
 
 # -----------
 # Open data |
@@ -118,7 +118,7 @@ merged_TKO_alldata<- Reduce(function(x,y) merge(x = x, y = y, by="Gene_name", so
 # Remove outliers |
 # -----------------
 
-# meRIP
+# meRIP outliers
 Q <- quantile(merged_WT_alldata$meRIP_WT, probs=c(.25, .75), na.rm = FALSE)
 iqr <- IQR(merged_WT_alldata$meRIP_WT)
 up <-  Q[2]+1.5*iqr # Upper Range  
@@ -133,7 +133,7 @@ low<- Q[1]-1.5*iqr # Lower Range
 merged_TKO_alldata <- subset(merged_TKO_alldata, merged_TKO_alldata$meRIP_TKO > low & merged_TKO_alldata$meRIP_TKO < up)
 nrow(merged_TKO_alldata)
 
-# cheRNA
+# cheRNA outliers
 Q <- quantile(merged_WT_alldata$cheRNA_WT_mean, probs=c(.25, .75), na.rm = FALSE)
 iqr <- IQR(merged_WT_alldata$cheRNA_WT_mean)
 up <-  Q[2]+1.5*iqr # Upper Range  
@@ -148,7 +148,7 @@ low<- Q[1]-1.5*iqr # Lower Range
 merged_TKO_alldata <- subset(merged_TKO_alldata, merged_TKO_alldata$cheRNA_TKO_mean > low & merged_TKO_alldata$cheRNA_TKO_mean < up)
 nrow(merged_TKO_alldata)
 
-# RNAPII_GB
+# RNAPII_GB outliers
 Q <- quantile(merged_WT_alldata$RNAPII_WTmean_GB, probs=c(.25, .75), na.rm = FALSE)
 iqr <- IQR(merged_WT_alldata$RNAPII_WTmean_GB)
 up <-  Q[2]+1.5*iqr # Upper Range  
@@ -163,7 +163,7 @@ low<- Q[1]-1.5*iqr # Lower Range
 merged_TKO_alldata <- subset(merged_TKO_alldata, merged_TKO_alldata$RNAPII_TKOmean_GB > low & merged_TKO_alldata$RNAPII_TKOmean_GB < up)
 nrow(merged_TKO_alldata)
 
-# RNAPII_PR
+# RNAPII_PR outliers
 Q <- quantile(merged_WT_alldata$RNAPII_WTmean_PR, probs=c(.25, .75), na.rm = FALSE)
 iqr <- IQR(merged_WT_alldata$RNAPII_WTmean_PR)
 up <-  Q[2]+1.5*iqr # Upper Range  
@@ -199,7 +199,8 @@ cor.test(merged_TKO_alldata$m6A, merged_TKO_alldata$RNAPII_GB, method="spearman"
 cor.test(merged_TKO_alldata$m6A, merged_TKO_alldata$cheRNA_levels, method="spearman")$p.val
 cor.test(merged_TKO_alldata$RNAPII_PR, merged_TKO_alldata$cheRNA_levels, method="spearman")$p.val
 
-nrow(merged_WT_alldata)#4573
+# Correlation panel WT
+nrow(merged_WT_alldata)
 png(file = paste0(output, "/Correlation_panel_Pull_WT.png"))
 pairs.panels(merged_WT_alldata[c(6,7,8,10)],
              density=T,
@@ -216,7 +217,8 @@ pairs.panels(merged_WT_alldata[c(6,7,8,10)],
              digits=3, cex=1)
 dev.off()
 
-nrow(merged_TKO_alldata)#4517
+# Correlation panel TKO
+nrow(merged_TKO_alldata)
 png(file = paste0(output, "/Correlation_panel_Pull_TKO.png"))
 pairs.panels(merged_TKO_alldata[c(6,7,8,10)],
              density=T,

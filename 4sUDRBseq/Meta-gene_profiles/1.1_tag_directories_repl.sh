@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Tag directory: is a directory that contains several files describing your data. 
 # The input file for making a tag directory is the output of the mapping process *.sam
 # makeTagDirectory is a function from HOMER

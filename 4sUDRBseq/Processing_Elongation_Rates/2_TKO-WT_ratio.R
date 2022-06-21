@@ -15,19 +15,16 @@ library("RColorBrewer")
 # -------
 # Paths |
 # -------
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull_processed_without05.txt"
-TTseq_replicates_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/1.1_Rate_calculation/Elongation_rate_5min_20220401_20Kb_size_processed.txt"
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull_processed_without05.txt"
 
-output2 <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/")
-output3 <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/TKO_comparisons/")
+output2 <- "/path/4sUDRB/Elongation_rate/Correlations/"
+output3 <- "/path/4sUDRB/Elongation_rate/TKOvsWT_rates/TKO_comparisons/"
+
 # -----------
 # Open data |
 # -----------
 TTseq <- read.table(TTseq_path,h=T,sep="\t",stringsAsFactors=F,
                     col.names = c("Gene_name","Chr", "Start","End","Exon_number","Strand","TTseq_WT_pull","TTseq_TKO_pull","Size"))
-
-TTseq_replicates <- read.table(TTseq_replicates_path,h=T,sep="\t",stringsAsFactors=F)
-TTseq_replicates$TKO_WT_ratio <- TTseq_replicates$WTmean/TTseq_replicates$TKOmean
 
 # -----------------
 # Ratios TKO / WT |

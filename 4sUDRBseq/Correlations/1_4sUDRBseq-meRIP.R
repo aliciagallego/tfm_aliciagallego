@@ -14,12 +14,12 @@ library("reshape2")
 # -------
 # Paths |
 # -------
-m6AWT_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
-m6ATKO_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull_processed_without05.txt"
+m6AWT_path <- "/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
+m6ATKO_path <-"/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull_processed_without05.txt"
 
-output <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/6_Correlations/")
-output3 <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/TKO_comparisons/")
+output <- ("/path/4sUDRB/Elongation_rate/Correlations/")
+output3 <- ("/path/4sUDRB/Elongation_rate/TKOvsWT_rates/")
 
 # -----------
 # Open data |
@@ -54,7 +54,7 @@ saved_values_WT <- subset(merged, merged$meRIP_WT > low & merged$meRIP_WT < up)
 head(saved_values_WT)
 nrow(saved_values_WT)
 
-# For replicate samples use:
+# For replicate samples use the following:
 
 # meRIP_WT1
 #Q <- quantile(merged$meRIP_WT1, probs=c(.25, .75), na.rm = FALSE)
@@ -80,7 +80,7 @@ low<- Q[1]-1.5*iqr # Lower Range
 saved_values_TKO <- subset(merged, merged$meRIP_TKO > low & merged$meRIP_TKO < up)
 nrow(saved_values_TKO)
 
-# For replicate samples use:
+# For replicate samples use the following:
 
 # meRIP_TKO1
 #Q <- quantile(merged$meRIP_TKO1, probs=c(.25, .75), na.rm = FALSE)

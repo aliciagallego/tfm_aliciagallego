@@ -7,8 +7,8 @@
 # -------
 # Paths |
 # -------
-refseq_path <- "/media/cc/A/Alicia/Genome_files/Josemi/RefSeq_genes.bed"
-output <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_data/"
+refseq_path <- "/path/RefSeq_genes.bed"
+output <- "/path/output"
 
 # -----------
 # Open data |

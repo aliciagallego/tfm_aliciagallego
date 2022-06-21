@@ -1,14 +1,14 @@
 #!/usr/bin/env Rscript
 
 ######################################
-## Normalize meRIP (RefSeq LongList) # 20220207
+## Normalize meRIP (RefSeq LongList) #
 ######################################
 
 # -------
 # Paths |
 # -------
-m6A_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/2_Intersect_RefSeq_BAM/"
-output <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/"
+m6A_path <- "/path/meRIP/Intersect_RefSeq_BAM/"
+output <- "/path/meRIP/Normalized/"
 
 # -------------------------------------
 # Open BED data meRIP-Ensembl aligned |
@@ -71,10 +71,8 @@ mergedWT <- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F)
                         WU2_IP[,c("meRIP_norm","Gene_name")]))
 
 colnames(mergedWT) <- c("Gene_name","Chr","Start","End","Strand","meRIP_WT1","meRIP_WT2")
-
 mergedWT$meRIP_WT <- (mergedWT$meRIP_WT1+mergedWT$meRIP_WT2)/2
-head(mergedWT)
-nrow(mergedWT)
+
 
 # TKO
 # ---
@@ -83,10 +81,8 @@ mergedTKO <- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F
                          TU2_IP[,c("meRIP_norm","Gene_name")]))
 
 colnames(mergedTKO) <- c("Gene_name","Chr","Start","End","Strand","meRIP_TKO1","meRIP_TKO2")
-
 mergedTKO$meRIP_TKO <- (mergedTKO$meRIP_TKO1+mergedTKO$meRIP_TKO2)/2
-head(mergedTKO)
-nrow(mergedTKO)
+
 
 # -----------
 # Save data |
@@ -110,8 +106,8 @@ sink()
 # ----------
 # Boxplots |
 # ----------
-nrow(mergedWT)
-nrow(mergedTKO)
+
+# Means
 png(file = paste0(output, "4_Plots/meRIP_All_RefSeqLongList_2Kb"))
 boxplot(mergedWT$meRIP_WT, mergedTKO$meRIP_TKO,
         col = c(4,2),
@@ -124,6 +120,7 @@ boxplot(mergedWT$meRIP_WT, mergedTKO$meRIP_TKO,
         boxwex = 0.3)
 dev.off()	
 
+# Replicates
 png(file = paste0(output, "4_Plots/meRIP_replicates_RefSeqLongList_2Kb"))
 boxplot(mergedWT$meRIP_WT1, mergedWT$meRIP_WT2, mergedTKO$meRIP_TKO1,mergedTKO$meRIP_TKO2,
         col = c(4,4,2,2),

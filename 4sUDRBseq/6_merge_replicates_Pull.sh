@@ -1,4 +1,4 @@
-# path:/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Visualize_alignments/MG10_RNA_DRB-4sU/2_Sorting
+# path:/path/4sUDRB/
 
 samtools merge Pull/WT0_MG9-11-13.bam   MG9-11.sorted.bam  MG9-13.sorted.bam 
 samtools merge Pull/WT5_MG9-12-14.bam   MG9-12.sorted.bam  MG9-14.sorted.bam

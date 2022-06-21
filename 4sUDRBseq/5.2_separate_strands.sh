@@ -9,9 +9,7 @@ NUMS=$(seq 11 18);
 
 for NUM in $NUMS
 do
-	BAM="/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Visualize_alignments/MG10_RNA_DRB-4sU/2_Sorting/MG9-"$NUM".sorted.bam"
-        #SALIDA="/media/cc/B/Josemi/TTseq_Feb2022/Visualize_alignments/MG10_RNA_DRB-4sU/3_Separate_strands/MG9-"$NUM
-
+	BAM="/path/4sUDRB/MG9-"$NUM".sorted.bam"
 
 	# Get the bam file from the command line
 	#BAM=$1

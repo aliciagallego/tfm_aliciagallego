@@ -7,8 +7,8 @@
 # -------
 # Paths |
 # -------
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull_processed_without05.txt"
-output <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/Overlaps/")
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull_processed_without05.txt"
+output <- ("/path/4sUDRB/Elongation_rate/TKOvsWT_rates/Overlaps/")
 
 # -----------
 # Open data |
@@ -30,7 +30,6 @@ lowTKO<- QTKO[[2]]
 TTseq$TTseq_WT_pull <lowWT
 
 count <- 0
-
 for(i in 1:nrow(TTseq)) {
   if(TTseq[i,7] <lowWT) {
     TTseq[i,10]="1WT_slow"
@@ -93,6 +92,8 @@ write.table(WTslow_TKOfast, file = paste0(output,"TTseq_GeneList_WTslow_TKOfast.
 # -----------
 # Bar plots |
 # -----------
+
+# Overlapping TKO across WT
 png(file = paste0(output, "Overlapping_TKO_across_WT.png"))
 TKO <- ggplot(data = TTseq) + 
   geom_bar(mapping = aes(x = WT_label, fill = TKO_label),width = 0.6)+
@@ -103,6 +104,7 @@ TKO <- ggplot(data = TTseq) +
 TKO + scale_fill_manual(values=c("firebrick1", "firebrick3", "firebrick4"))
 dev.off()
 
+# Overlapping WT across TKO
 png(file = paste0(output, "Overlapping_WT_across_TKO.png"))
 WT <- ggplot(data = TTseq) + 
   geom_bar(mapping = aes(x = TKO_label, fill = WT_label),width = 0.6)+

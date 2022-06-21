@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
 
-############################################################
-## Correlations elongation rates (TTseq_Feb2022) WT vs TKO # 20220511
-############################################################
+############################################################################
+## Correlations elongation rates (4sUDRBseq or TTseq) between WT vs H1-TKO #
+############################################################################
 
 # -----------
 # Libraries |
@@ -14,11 +14,12 @@ library("reshape2")
 # -------
 # Paths |
 # -------
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull_processed_without05.txt"
-TTseq_replicates_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/1.1_Rate_calculation/Elongation_rate_5min_20220401_20Kb_size_processed.txt"
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull_processed_without05.txt"
+TTseq_replicates_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Repl_processed_without05.txt"
 
-output <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/6_Correlations/")
-output2 <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/")
+output <- "/path/4sUDRB/Elongation_rate/Correlations/"
+output2 <- "/path/4sUDRB/Elongation_rate/TKOvsWT_rates/"
+
 # -----------
 # Open data |
 # -----------
@@ -31,6 +32,7 @@ TTseq_replicates <- read.table(TTseq_replicates_path,h=T,sep="\t",stringsAsFacto
 # Correlation test |
 # ------------------
 
+# Pull
 png(file = paste0(output, "TTseq_WT_TKO/Spearman_TTseq_pull_WT_TKO.png"))
 TTseq$Gene_name <- rownames(TTseq)
 ggscatter(TTseq, y = "TTseq_WT_pull", x = "TTseq_TKO_pull",
@@ -52,6 +54,7 @@ ggscatter(TTseq, y = "TTseq_WT_pull", x = "TTseq_TKO_pull",
   ggtitle(paste0("Spearman correlation \n elongation rates in WT vs TKO (", number, " genes)"))
 dev.off()
 
+# Replicates
 png(file = paste0(output, "TTseq_WT_TKO/Spearman_TTseq_WT1_WT2.png"))
 TTseq_replicatesWT <- TTseq_replicates[which(TTseq_replicates$WT1 > 0.5 & TTseq_replicates$WT2 > 0.5),]
 number <- nrow(TTseq_replicatesWT)

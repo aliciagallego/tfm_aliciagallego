@@ -4,23 +4,28 @@
 ## Normalize elongation rate calculations # 
 ###########################################
 
+# -----------
+# Libraries |
+# -----------
+library("vioplot")
+
 # -------
 # Paths |
 # -------
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull.txt"
-refseq_path <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_2/4_Input_genes/Input_genes_20Kb.txt")
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull.txt"
+refseq_path <- ("/path/Input_genes/Input_genes_20Kb.txt")
 
-m6AWT_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
-m6ATKO_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
+m6AWT_path <- "/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
+m6ATKO_path <-"/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
 
-RNApolGB_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/GeneBody/RNAPII_RefSeq_LongList_GB_500bp.bed"
-RNApolPR_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/Promoters/RNAPII_RefSeq_LongList_PR_500bp.bed"
+RNApolGB_path <- "/path/RNAPII/Normalized_data/GeneBody/RNAPII_RefSeq_LongList_GB_500bp.bed"
+RNApolPR_path <- "/path/RNAPII/Normalized_data/Promoters/RNAPII_RefSeq_LongList_PR_500bp.bed"
 
-Pausing_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Pausing_index/RNAPII_RefSeq_LongList_PausingIndex_500bp.txt"
+Pausing_path <- "/path/RNAPII/Pausing_index/RNAPII_RefSeq_LongList_PausingIndex_500bp.txt"
 
-cheRNA_path <- "/media/cc/A/Alicia/NGS/cheRNA/cheRNA_output/2_Normalized_data/cheRNA_RefSeq_LongList_Normalized.bed"
+cheRNA_path <- "/path/cheRNA/Normalized_data/cheRNA_RefSeq_LongList_Normalized.bed"
 
-output <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/")
+output <- "/path/4sUDRB/Elongation_rate/"
 
 # -----------
 # Open data |
@@ -142,7 +147,7 @@ write.table(bind_WT_TKO, file = paste0(output,"7_Rates_and_all_data/Rates_and_al
             quote = F, sep="\t", col.names = TRUE, row.names = FALSE)
 
 # ------------------------------
-# Obtain tertiles and classify |
+# Obtain tertiles and classify | slow, medium and fast rate groups
 # ------------------------------
 
 # WT
@@ -389,30 +394,12 @@ legend("topright", c("WT slow","WT med","WT fast","TKO slow","TKO med","TKO fast
        col=c("blue","blue2","blue3","red","red2","red3"), lwd=2, lty=c(3,2,1), inset = .02,cex=0.9)
 dev.off()	
 
-# bandwidth = 0.6
-png(file = paste0(output, "5_Plots_without05/Density_Pull_tertiles_bw06.png"))
-plot(density(WTmedium$WT_Pull, from=-1, to=8, bw=.6), 
-     col="deepskyblue3", 
-     lty=2, 
-     main = paste("WT and TKO elongation rates in", number, "genes (threshold=0.7) \n (genes with at least one NA were removed in all the samples)"), 
-     cex.main=1, 
-     xlab = "Elongation rate (kb/min) \n bandwidth = 0.6")
-lines(density(WTslow$WT_Pull, to=8, bw=.6), lty=3, col="deepskyblue")
-lines(density(WTfast$WT_Pull, to=8, bw=.6), col="deepskyblue4", lty=1)
-
-lines(density(TKOslow$TK0_Pull, to=8, bw=.6), col="indianred1", lty=3)
-lines(density(TKOmedium$TK0_Pull, to=8, bw=.6), lty=2, col="indianred4")
-lines(density(TKOfast$TK0_Pull, to=8, bw=.6), lty=1, col="red3")
-
-legend("topright", c("WT slow","WT med","WT fast","TKO slow","TKO med","TKO fast"), 
-       col=c("deepskyblue","deepskyblue3","deepskyblue4","indianred1","indianred4","red3"), lwd=1.5, lty=c(3,2,1), inset = .02,cex=0.9)
-dev.off()	
-
 # --------------------------
 # Elongation rate Boxplots |
 # --------------------------
 row_noNA <- nrow(merged_non05)
 
+# All data
 png(file = paste0(output, "5_Plots_without05/Boxplots_Pull.png"))
 wilcox <- wilcox.test(merged_non05$WT_Pull, merged_non05$TK0_Pull)
 wilcox
@@ -431,6 +418,7 @@ boxplot(merged_non05$WT_Pull, merged_non05$TK0_Pull,
 #legend("topleft", c("WT","H1-TKO"), col=c("blue","red"), lwd=4, cex=1.5, inset = .02)
 dev.off()	
 
+# Tertiles
 png(file = paste0(output, "5_Plots_without05/Boxplots_Pull_tertiles_signif.png"))
 #wilcoxfast <- wilcox.test(WTfast$WT_Pull, TKOfast$TK0_Pull)
 #wilcoxfast
@@ -602,10 +590,8 @@ dev.off()
 # --------------
 # Violin plots | 
 # --------------
-#install.packages("vioplot")
-library("vioplot")
 
-# Pull
+# All data
 number <- nrow(merged_non05)
 png(file = paste0(output, "5_Plots_without05/Violinplots_Pull2.png"))
 vioplot(merged_non05$WT_Pull, merged_non05$TK0_Pull,
@@ -628,7 +614,7 @@ vioplot(merged_non05$WT_Pull, merged_non05$TK0_Pull,
 legend("bottomright", c("WT","TKO"), col=c("blue","red"), lwd=4, inset = .02)
 dev.off()
 
-# replicates and quantiles
+# Tertiles
 png(file = paste0(output, "5_Plots_without05/Violinplots_Pull_tertiles.png"))
 vioplot(WTslow$WT_Pull, TKOslow$TK0_Pull, 
         WTmedium$WT_Pull, TKOmedium$TK0_Pull, 

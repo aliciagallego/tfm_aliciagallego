@@ -7,16 +7,17 @@
 # -----------
 # Libraries |
 # -----------
+library("ggplot2")
 library("ggpubr")
 library("reshape2")
 
 # -------
 # Paths |
 # -------
-TTseq_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/1.1_Rate_calculation/Elongation_rate_5min_20220425_20Kb_size_Pull_processed_without05.txt"
-cheRNA_path <- "/media/cc/A/Alicia/NGS/cheRNA/cheRNA_output/2_Normalized_data/cheRNA_RefSeq_LongList_Normalized.bed"
+cheRNA_path <- "/path/cheRNA/Normalized_data/cheRNA_RefSeq_LongList_Normalized.bed"
+TTseq_path <- "/path/4sUDRB/Elongation_rate/Rate_calculation/Elongation_rate_20Kb_Pull_processed_without05.txt"
 
-output <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/6_Correlations/"
+output <- ("/path/4sUDRB/Elongation_rate/Correlations/")
 
 # -----------
 # Open data |
@@ -37,33 +38,6 @@ merged<- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F),
 # ------------------
 write.table(merged, file = paste0(output,"TTseq_cheRNA/TTseq_cheRNA.txt"), 
             quote = F, sep="\t", col.names = T, row.names = F)
-
-# ----------------------------------
-# Remove outliers from TTseqA data |
-# ----------------------------------
-Q <- quantile(merged$TTseqA_WT_TPM, probs=c(.25, .75), na.rm = FALSE)
-iqr <- IQR(merged$TTseqA_WT_TPM)
-up <-  Q[2]+1.5*iqr # Upper Range  
-low<- Q[1]-1.5*iqr # Lower Range
-saved_values_WT <- subset(merged, merged$TTseqA_WT_TPM > low & merged$TTseqA_WT_TPM < up)
-head(saved_values_WT)
-nrow(saved_values_WT)
-
-Q <- quantile(merged$TTseqA_TKO_TPM, probs=c(.25, .75), na.rm = FALSE)
-iqr <- IQR(merged$TTseqA_TKO_TPM)
-up <-  Q[2]+1.5*iqr # Upper Range  
-low<- Q[1]-1.5*iqr # Lower Range
-saved_values_TKO <- subset(merged, merged$TTseqA_TKO_TPM > low & merged$TTseqA_TKO_TPM < up)
-head(saved_values_TKO)
-nrow(saved_values_TKO)
-
-# select TMP > 1
-saved_values_WT2 <- subset(saved_values_WT, saved_values_WT$TTseqA_WT_TPM > 1)
-saved_values_TKO2 <- subset(saved_values_TKO, saved_values_TKO$TTseqA_TKO_TPM > 1)
-
-# select especific TMP based on TPM distributions
-saved_values_WT3 <- subset(saved_values_WT, saved_values_WT$TTseqA_WT_TPM > 30)
-saved_values_TKO3 <- subset(saved_values_TKO, saved_values_TKO$TTseqA_TKO_TPM > 15)
 
 # ------------------
 # Correlation test |

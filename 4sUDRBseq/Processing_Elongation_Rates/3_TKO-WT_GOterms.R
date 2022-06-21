@@ -7,8 +7,8 @@
 # -------
 # Paths |
 # -------
-GOterms_path <- "/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/Go-terms/"
-output <- ("/media/cc/B/Josemi/TTseq_Feb2022/TTseq_output/Elongation_rate_3/8_TKOvsWT_rates/Go-terms_2SD/")
+GOterms_path <- "/path/4sUDRB/Elongation_rate/TKOvsWT_rates/Go-terms/"
+output <- ("/path/4sUDRB/Elongation_rate/TKOvsWT_rates/Go-terms/")
 
 # -----------
 # Open data |
@@ -88,7 +88,6 @@ barplot(ordered[,9][1:10], #FDR -log10 value
         cex.names=0.8, las=1,
         main="TKO Fast - Biological processes",
         xlab = "-log10(FDR)")
-#text("TKO Fast - Biological processes", x=3, y = 0.6, font=2, cex=1.2)
 dev.off()
 
 png(file = paste0(output, "GO_TKOfast_molecular_function.png"))
@@ -132,7 +131,6 @@ barplot(ordered[,9][1:19], #FDR -log10 value
         cex.names=0.8, las=1,
         main="TKO Fast & Slow \nBiological processes",
         xlab = "-log10(FDR)")
-#text("TKO Fast - Biological processes", x=3, y = 0.6, font=2, cex=1.2)
 dev.off()
 
 png(file = paste0(output, "GO_TKOfast_slow_molecular_function.png"))

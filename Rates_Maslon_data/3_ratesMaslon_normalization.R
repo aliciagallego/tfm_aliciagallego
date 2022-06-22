@@ -7,14 +7,15 @@
 # -----------
 # Libraries |
 # -----------
+libraty("ggplot")
 library("ggpubr")
 
 # -------
 # Paths |
 # -------
-m6A_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_output/2_Intersect_bedtools/"
-rates_Maslon_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_data/Elongation_rates_MaslonWT.txt"
-rates_out <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_output/"
+m6A_path <- "/path/Maslon2019/Intersect_bedtools/"
+rates_Maslon_path <- "/path/Maslon2019/Intersect_bedtools/Maslon_data/Elongation_rates_MaslonWT.txt"
+rates_out <- "/path/Maslon2019/"
 
 # ---------------------------------------
 # Open TXT data Maslon elongation rates |
@@ -166,7 +167,7 @@ sink()
 # ----------
 # Boxplots |
 # ----------
-png(file = paste0(rates_out, "5_Plots/meRIP_All_2Kb"))
+png(file = paste0(rates_out, "Plots/meRIP_All_2Kb"))
 boxplot(mergedWT$meRIP_WT, mergedTKO$meRIP_TKO,
         col = c(4,2),
         at = c(1,2),
@@ -178,7 +179,7 @@ boxplot(mergedWT$meRIP_WT, mergedTKO$meRIP_TKO,
         boxwex = 0.3)
 dev.off()	
 
-png(file = paste0(rates_out, "5_Plots/meRIP_replicates_2Kb"))
+png(file = paste0(rates_out, "Plots/meRIP_replicates_2Kb"))
 boxplot(mergedWT$meRIP_WT1, mergedWT$meRIP_WT2, mergedTKO$meRIP_TKO1,mergedTKO$meRIP_TKO2,
         col = c(4,4,2,2),
         at = c(1,2,4,5),
@@ -195,7 +196,7 @@ dev.off()
 # -------------------------------
 rates_Maslon_m6A_WT <- rates_Maslon_m6A_WT[order(rates_Maslon_m6A_WT$Maslon_Kb_min,decreasing = TRUE),] 
 
-png(file = paste0(rates_out, "5_Plots/Plot_MaslonElongation_meRIP_WT_2Kb.png"))
+png(file = paste0(rates_out, "Plots/Plot_MaslonElongation_meRIP_WT_2Kb.png"))
 plot(rates_Maslon_m6A_WT$Maslon_Kb_min,
      col="blue",
      main="Elongation rates Maslon (808 genes + 2Kb)",
@@ -218,7 +219,7 @@ dev.off()
 cor.test(saved_values_WT$Reads_norm_WT, saved_values_WT$elongation_b_min, method=c("pearson", "kendall", "spearman"))
 
 # Pearson resulted to be more significant
-png(file = paste0(rates_out, "5_Plots/Pearson_MaslonElongation_meRIP_WT_2Kb.png"))
+png(file = paste0(rates_out, "Plots/Pearson_MaslonElongation_meRIP_WT_2Kb.png"))
 ggscatter(saved_values_WT, y = "meRIP_WT", x = "Maslon_Kb_min",
           color="lightblue3",shape = 20,
           size=1.5,

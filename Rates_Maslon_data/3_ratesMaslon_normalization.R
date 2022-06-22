@@ -113,11 +113,11 @@ mergedWT[which(mergedWT$Transcript.stable.ID == "ENSMUST00000071543"), ]
 # Save data |
 # -----------
 write.table(mergedWT, 
-            file = paste0(rates_out,"3_Normalized_data/meRIP_Ensembl_Normalized_WT_2Kb.txt"),
+            file = paste0(rates_out,"Normalized_data/meRIP_Ensembl_Normalized_WT_2Kb.txt"),
             quote = F, sep="\t", col.names = T, row.names = F) 
 
 write.table(mergedTKO, 
-            file = paste0(rates_out,"3_Normalized_data/meRIP_Ensembl_Normalized_TKO_2Kb.txt"),
+            file = paste0(rates_out,"Normalized_data/meRIP_Ensembl_Normalized_TKO_2Kb.txt"),
             quote = F, sep="\t", col.names = T, row.names = F) 
 
 # -------------------------------
@@ -135,7 +135,7 @@ print(paste(lost,"transcripts lost from Maslon list after merge"))
 # Save data |
 # -----------
 write.table(rates_Maslon_m6A_WT, 
-            file = paste0(rates_out,"4_meRIP_Maslon/meRIP_Normalized_Maslon_WT_2Kb.txt"),
+            file = paste0(rates_out,"meRIP_Maslon/meRIP_Normalized_Maslon_WT_2Kb.txt"),
             quote = F, sep="\t", col.names = T, row.names = F) 
 
 # ---------------------
@@ -154,7 +154,7 @@ print(paste(lost2,"transcripts lost from Maslon list after merge and meRIP outli
 # Save data |
 # -----------
 write.table(saved_values_WT, 
-            file = paste0(rates_out,"4_meRIP_Maslon/meRIP_Normalized_Maslon_WT_noOutliers_2Kb.txt"),
+            file = paste0(rates_out,"meRIP_Maslon/meRIP_Normalized_Maslon_WT_noOutliers_2Kb.txt"),
             quote = F, sep="\t", col.names = T, row.names = F) 
 
 # ----------------------------

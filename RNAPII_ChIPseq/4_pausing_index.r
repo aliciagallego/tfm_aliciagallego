@@ -12,15 +12,15 @@ library("ggpubr")
 # -------
 # Paths |
 # -------
-RNAPII_GB_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/GeneBody/RNAPII_RefSeq_LongList_GB_500bp.bed"
-RNAPII_PR_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/Promoters/RNAPII_RefSeq_LongList_PR_500bp.bed"
+RNAPII_GB_path <- "/path/RNAPII/Intersect_bedtools/GeneBody/"
+RNAPII_PR_path <- "/path/RNAPII/Intersect_bedtools/Promoters/"
 
-m6AWT_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
-m6ATKO_path <- "/media/cc/A/Alicia/NGS/meRIP_2/meRIP2_output/3_Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
+m6AWT_path <- "/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_WT_2Kb.txt"
+m6ATKO_path <-"/path/meRIP/Normalized_data/meRIP_RefSeqLongList_Normalized_TKO_2Kb.txt"
 
-output <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Pausing_index/"
-output_plots <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Pausing_index/Plots/"
-output_correlation <- "/media/cc/A/Alicia/NGS/Correlations/PausingIndex_m6A/"
+output <- "/path/RNAPII/Pausing_index/"
+output_plots <- "/path/RNAPII/Pausing_index/Plots/"
+output_correlation <- "/path/RNAPII/Pausing_index/Correlations/PausingIndex_m6A/"
 
 # -----------
 # Open data |
@@ -60,16 +60,16 @@ write.table(mergedRNAPII_GB_PR,
             file = paste0(output,"RNAPII_RefSeq_LongList_PausingIndex_500bp.txt"),
             quote = F, sep="\t", col.names = T, row.names = F)     
 
-# ------------------------------------------
-# Merge RNApolII pausing data and m6A data |
-# ------------------------------------------
+# ----------------------------------------
+# Merge RNAPII pausing data and m6A data |
+# ----------------------------------------
 merged<- Reduce(function(x,y) merge(x = x, y = y, by = "Gene_name", sort = F),
                 list(m6AWT[,c("Chr","Start","End","Strand","meRIP_WT","Gene_name")],
                      m6ATKO[,c("meRIP_TKO","Gene_name")],
                      mergedRNAPII_GB_PR[,c("PausIndex_WT","PausIndex_TKO", "Gene_name")]))
 
 # ---------------------------------------------------------------
-# Remove outliers from meRIP data and log transform RNApol data |
+# Remove outliers from meRIP data and log transform RNAPII data |
 # ---------------------------------------------------------------
 Q <- quantile(merged$meRIP_WT, probs=c(.25, .75), na.rm = FALSE)
 iqr <- IQR(merged$meRIP_WT)
@@ -102,11 +102,9 @@ boxplot(mergedRNAPII_GB_PR$PausIndex_WT, mergedRNAPII_GB_PR$PausIndex_TKO,
         outline = F,
         xlab=paste("Wilcox test: W = 207061353, p-value = 0.02151"),
         boxwex = 0.3)
-text( 
-  x=c(1:2), 
-  y=4.2,
-  paste("mean = ",means,sep="")
-)
+text(x=c(1:2),
+     y=4.2,
+     paste("mean = ",means,sep=""))
 dev.off()	
 
 # ---------------------------------------------------
@@ -116,9 +114,9 @@ sink(paste0(output_plots, "RNApolII_WilcoxTest_RefSeq_LongList_PausingIndex_500b
 wilcox.test(mergedRNAPII_GB_PR$PausIndex_WT, mergedRNAPII_GB_PR$PausIndex_TKO)
 sink()
 
-# -------------------------------------------------
-# Correlation test RNApolII pausing index and m6A |
-# -------------------------------------------------
+# -----------------------------------------------
+# Correlation test RNAPII pausing index and m6A |
+# -----------------------------------------------
 genesWT <- nrow(saved_values_WT)
 genesTKO <- nrow(saved_values_TKO)
 

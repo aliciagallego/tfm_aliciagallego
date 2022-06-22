@@ -7,17 +7,17 @@
 # -------
 # Paths |
 # -------
-ensembl_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_data/Ensembl_mm10_transcripts.bed"
-rates_out <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_output/1_Prepare_Ensembl_list/"
+ensembl_path <- "/path/Maslon2019/Genome_data/Ensembl_mm10_transcripts.bed"
+rates_out    <- "/path/Maslon2019/Genome_data/"
 
 # -----------
 # Open data |
 # -----------
 ensembl <- read.table(ensembl_path,h=F,sep="\t",stringsAsFactors=FALSE)
 
-# -------------------------------------
-# Transform start - 2Kb and end + 2Kb |
-# -------------------------------------
+# ---------------------------------------------------
+# Transform coords: start = start-2Kb end = end+2Kb |
+# ---------------------------------------------------
 count <- 0
 for(i in 1:nrow(ensembl)) {
   if(ensembl[i,6] == '+' | ensembl[i,6] == '-') {

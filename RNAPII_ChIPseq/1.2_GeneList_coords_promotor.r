@@ -7,19 +7,17 @@
 # -------
 # Paths |
 # -------
-refseq_path <- "/media/cc/A/Alicia/Genome_files/Josemi/RefSeq_genes.bed"
-genebody_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Gene_selection_RefSeq/Input_genes_RefSeq_Long_List_GeneBody.bed" # (20546 genes)
-output <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Gene_selection_RefSeq/"
+refseq_path <- "/path/Genome_files/RefSeq_genes.bed"
+output <- "/path/RNAPII/Gene_selection_RefSeq/"
 
 # -----------
 # Open data |
 # -----------
 refseq <- read.table(refseq_path,h=F,sep="\t",stringsAsFactors=F)
-genebody <- read.table(genebody_path,h=F,sep="\t",stringsAsFactors=F)
 
-# --------------------------------------------------
-# Generate new start/end coords from previous ones |
-# --------------------------------------------------
+# ---------------------------------------------------
+# Transform start = start-500b and end = start+500b |
+# ---------------------------------------------------
 count <- 0
 for(i in 1:nrow(refseq)) {
   if(refseq[i,6] == '+') {

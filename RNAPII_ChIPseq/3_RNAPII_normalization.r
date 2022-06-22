@@ -7,11 +7,11 @@
 # -------
 # Paths |
 # -------
-RNAPII_GB_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/1_Intersect_bedtools/GeneBody/"
-RNAPII_PR_path <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/1_Intersect_bedtools/Promoters/"
+RNAPII_GB_path <- "/path/RNAPII/Intersect_bedtools/GeneBody/"
+RNAPII_PR_path <- "/path/RNAPII/Intersect_bedtools/Promoters/"
 
-output <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/2_Normalized_data/"
-output_plots <- "/media/cc/A/Alicia/NGS/RNApolII_3/RNApolII3_output/Intersect_RefSeq_BAM/BoxPlots/"
+output <- "/path/RNAPII/Normalized_data/"
+output_plots <- "/path/RNAPII/BoxPlots/"
 
 # -------------------------------------
 # Open BED data meRIP-Ensembl aligned |

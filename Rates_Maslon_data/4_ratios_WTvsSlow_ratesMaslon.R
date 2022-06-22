@@ -7,10 +7,10 @@
 # -------
 # Paths |
 # -------
-rates_Maslon_WT_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_data/Elongation_rates_MaslonWT.txt"
-rates_Maslon_Slow_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_data/Elongation_rates_MaslonSlowSlow.txt"
-m6A_WT_path <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_output/3_Normalized_data/meRIP_Ensembl_Normalized_WT_2Kb.txt"
-rates_out <- "/media/cc/A/Alicia/Maslon2019_3/Maslon3_output/4_meRIP_Maslon/"
+rates_Maslon_WT_path <- "/path/Maslon2019/Intersect_bedtools/Maslon_data/Elongation_rates_MaslonWT.txt"
+rates_Maslon_Slow_path <-"/path/Maslon2019/Intersect_bedtools/Maslon_data/Elongation_rates_MaslonSlowSlow.txt"
+m6A_WT_path <- "/path/Maslon2019/Normalized_data/meRIP_Ensembl_Normalized_WT_2Kb.txt"
+rates_out <- "/path/Maslon2019/meRIP_Maslon/"
 
 # -----------
 # Open data |
